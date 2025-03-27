@@ -7,6 +7,8 @@ import { Button } from "@/Components/ui/button";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import gsap from "gsap";
+import { urlFor } from "@/sanity/lib/image";
+// import { urlFor } from "@/sanity/image-url";
 
 async function getData() {
   const query = `*[_type == "work"]{
@@ -15,7 +17,7 @@ async function getData() {
     title,
     "currentSlug": slug.current,
     description,
-    technologies,
+    stacks,
     github,
     liveDemo
   }`;
@@ -49,66 +51,56 @@ const Page = () => {
         ref={workRef}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {data.length > 0 ? (
-          data.map((i, index) => (
-            <Card
-              key={i.currentSlug || index}
-              className=" p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl border border-gray-700"
-            >
-              {i.image?.asset?.url && (
-                <div className=" relative w-full h-40 mb-4 overflow-hidden">
-                  <Image
-                    width={400}
-                    height={300}
-                    src={i.image.asset.url}
-                    alt={i.title || "image"}
-                    className="object-cover rounded-2"
-                  />
-                </div>
-              )}
-
-              <h3 className="text-xl font-semibold text-gray-400 ">
-                {i.title}
-              </h3>
-
-              <p className="text-gray-400 text-sm  text-gray-600 font-bold text-2xl">
-                Stack used : {i.technologies}
-              </p>
-
-              {i.liveDemo && (
+        {data.map((i, index) => (
+          <Card
+            key={i.currentSlug || index}
+            className="p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl border border-gray-700"
+          >
+            {i.image && (
+              <div className="relative w-full h-40 mb-4 overflow-hidden">
+                <Image
+                  width={400}
+                  height={300}
+                  src={urlFor(i.image).url()} // Use urlFor function here
+                  alt={i.title || "image"}
+                  className="object-cover rounded-2"
+                />
+              </div>
+            )}
+            <h3 className="text-xl font-semibold text-gray-400">{i.title}</h3>
+            <p className="text-gray-400 text-sm  font-bold text-2xl">
+              Stack used : {i.stacks}
+            </p>
+            {i.liveDemo && (
+              <a
+                href={i.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center font-semibold text-gray-800 hover:text-black hover:underline mb-3"
+              >
+                View Live Demo
+              </a>
+            )}
+            <div className="flex justify-between">
+              {i.github && (
                 <a
-                  href={i.liveDemo}
+                  href={i.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center font-semibold text-gray-800 hover:text-black hover:underline  mb-3"
+                  className="px-4 py-2 text-sm font-medium bg-gray-500 text-white rounded-lg hover:bg-black transition-colors"
                 >
-                  View Live Demo
+                  GitHub
                 </a>
               )}
-
-              <div className="flex justify-between">
-                {i.github && (
-                  <a
-                    href={i.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 text-sm font-medium bg-gray-500 text-white rounded-lg hover:bg-black transition-colors"
-                  >
-                    GitHub
-                  </a>
-                )}
-                <Button
-                  asChild
-                  className="hover:bg-white hover:text-black px-4 py-2 text-sm font-medium rounded-lg bg-gray-300 text-white transition"
-                >
-                  <Link href={`/skills/${i.currentSlug}`}>Know more</Link>
-                </Button>
-              </div>
-            </Card>
-          ))
-        ) : (
-          <p className="text-gray-500 text-center">No items found</p>
-        )}
+              <Button
+                asChild
+                className="hover:bg-white hover:text-black px-4 py-2 text-sm font-medium rounded-lg bg-gray-300 text-white transition"
+              >
+                <Link href={`/skills/${i.currentSlug}`}>Know more</Link>
+              </Button>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   );

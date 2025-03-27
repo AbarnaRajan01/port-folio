@@ -29,7 +29,7 @@ export interface projectCard {
     title: string;
     description: string;
     currentSlug: string;
-    technologies: string;
+    stacks: string;
     image: SanityImageSource;  // ✅ Corrected
     liveDemo: string;
     github: string;
