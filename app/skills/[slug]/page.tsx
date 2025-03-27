@@ -61,7 +61,7 @@ export default async function Page({ params }: PageProps) {
             <p className="text-gray-400 text-center">No image available</p>
           )}
         </div>
-        <div className="mt-16 prose-blue dark:prose-invert px-6">
+        <div className="mt-16 prose-blue px-6">
           <PortableText value={data.content} />
         </div>
       </div>
