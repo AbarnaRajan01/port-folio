@@ -29,10 +29,10 @@ const AboutPage = () => {
         </h2>
 
         <p className="text-gray-700 text-2xl p-5">
-          "I specialize in building scalable full-stack applications, <br />
-          focusing on backend efficiency and smooth frontend experiences. <br />
-          I'm particularly invested in TypeScript and backend development,
-          ensuring robust and maintainable codebases."
+          I specialize in building scalable full-stack applications <br />
+          focusing on backend efficiency and smooth frontend experiences <br />I
+          particularly invested in TypeScript and backend development ensuring
+          robust and maintainable codebases
         </p>
 
         <Button className="bg-black rounded-lg w-[200px] h-[50px] text-white mt-5 text-xl">
