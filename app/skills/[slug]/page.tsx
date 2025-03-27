@@ -22,13 +22,14 @@ async function getData(slug: string): Promise<newSkill | null> {
 }
 
 // ✅ Fix: Explicitly define `params`
-interface SkillPageProps {
+interface PageProps {
   params: {
     slug: string;
   };
 }
 
-export default async function Page({ params }: SkillPageProps) {
+// Ensure function is not mistakenly treating params as a Promise
+export default async function Page({ params }: PageProps) {
   const data = await getData(params.slug);
 
   if (!data) {
