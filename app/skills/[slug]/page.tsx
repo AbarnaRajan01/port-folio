@@ -3,10 +3,11 @@ import { client } from "@/sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 
-async function getData(slug: string) {
+// Fetch skill data from Sanity
+async function getData(slug: string): Promise<newSkill | null> {
   const query = `*[_type=='skill' && slug.current==$slug][0]
   {
-    "currentSlug":slug.current,
+    "currentSlug": slug.current,
     name,
     image{
       asset->{
@@ -17,13 +18,18 @@ async function getData(slug: string) {
     content
   }`;
 
-  const data = await client.fetch(query, { slug });
-  return data;
+  return await client.fetch(query, { slug });
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const data: newSkill | null = await getData(params.slug);
-  console.log(data);
+// ✅ Fix: Explicitly define `params`
+interface SkillPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default async function Page({ params }: SkillPageProps) {
+  const data = await getData(params.slug);
 
   if (!data) {
     return (
@@ -35,7 +41,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Main Content */}
       <div className="flex-grow flex flex-col items-center p-6">
         <div className="rounded-xl p-6 max-w-lg w-full">
           <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">

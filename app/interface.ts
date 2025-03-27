@@ -7,13 +7,22 @@ export interface skillCard {
     image: SanityImageSource;  // ✅ Corrected
     currentSlug: string;
 }
+export interface SanityAsset {
+  _id: string;
+  url: string;
+}
+
+export interface SanityImage {
+  asset: SanityAsset;
+}
 
 export interface newSkill {
-    name: string;
-    content: TypedObject[];
-    image: SanityImageSource;  // ✅ Corrected
-    currentSlug: string;
+  name: string;
+  content: TypedObject[];
+  image: SanityImage;  // ✅ Now TypeScript knows `asset` exists
+  currentSlug: string;
 }
+
 
 export interface projectCard {
     _id: string;

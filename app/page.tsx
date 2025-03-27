@@ -33,7 +33,7 @@ const Page = () => {
       {/* Header Content */}
       <div ref={headRef} className="absolute top-10 left-10 text-black">
         <h1 className="text-7xl font-bold">
-          I`&apos;`m <strong>Abarna Rajan</strong>
+          I&apos;m <strong>Abarna Rajan</strong>
         </h1>
         <span className="text-4xl text-gray-500 mt-5">A Web Developer</span>
       </div>
